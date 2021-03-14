@@ -15,6 +15,7 @@ import * as eva from '@eva-design/eva';
 import { ApplicationProvider } from '@ui-kitten/components';
 import { NavigationContainer } from '@react-navigation/native';
 import { HomeScreen } from './screens/home'
+import { LoginScreen } from './screens/login'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
 const Drawer = createDrawerNavigator();
@@ -25,6 +26,7 @@ const App = () => {
       <NavigationContainer>
         <Drawer.Navigator initialRouteName="Home">
           <Drawer.Screen name="Home" component={HomeScreen} />
+          <Drawer.Screen name="Login" component={LoginScreen} />
         </Drawer.Navigator>
       </NavigationContainer>
     </ApplicationProvider>
