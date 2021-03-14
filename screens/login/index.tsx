@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import { Text, Button, Input, Layout } from '@ui-kitten/components'
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native'
 
-export const LoginScreen = () => {
+export const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   
   const submit = () => {
     console.log({ username, password })
   }
+
   return (
 
     <SafeAreaView style={{flex: 1}}>
@@ -33,6 +34,7 @@ export const LoginScreen = () => {
               <Button 
                 style={{marginRight: 5}}
                 status="basic"
+                onPress={() => navigation.navigate('Home')}
               >Cancel</Button>
               <Button onPress={submit} disabled={!username || !password}>Login</Button>
             </Layout>
