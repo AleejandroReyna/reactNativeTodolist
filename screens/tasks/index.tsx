@@ -5,12 +5,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const TabNavigator = createBottomTabNavigator()
 
-export const TasksScreen = () => {
-
-  const TodoPanel = () => <TaskPanel title='To Do' />
-  const DoingPanel = () => <TaskPanel title='Doing' />
-  const InReviewPanel = () => <TaskPanel title='In Review' />
-  const DonePanel = () => <TaskPanel title='Done' />
+const TodoPanel = () => <TaskPanel title='To Do' />
+const DoingPanel = () => <TaskPanel title='Doing' />
+const InReviewPanel = () => <TaskPanel title='In Review' />
+const DonePanel = () => <TaskPanel title='Done' />
 
   const BottomTabBar = ({ navigation, state }) => (
     <BottomNavigation
@@ -22,6 +20,8 @@ export const TasksScreen = () => {
       <BottomNavigationTab title='Done'/>
     </BottomNavigation>
   );
+
+export const TasksScreen = () => {
 
   return (
     <TabNavigator.Navigator tabBar={props => <BottomTabBar {...props} />}>
