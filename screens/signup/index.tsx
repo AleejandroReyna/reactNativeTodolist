@@ -4,19 +4,20 @@ import { SafeAreaView, ScrollView, StyleSheet } from 'react-native'
 import { DrawerNavigationProp } from '@react-navigation/drawer'
 import { DrawerParamList } from '../../App'
 
-type NavigationProps = DrawerNavigationProp<DrawerParamList, 'Login'>
+type NavigationProps = DrawerNavigationProp<DrawerParamList, 'Signup'>
 
 type Props = {
   navigation: NavigationProps
 }
 
 
-export const LoginScreen = ({ navigation }:Props) => {
+export const SignupScreen = ({ navigation }:Props) => {
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+  const [passwordConf, setPasswordConf] = useState<string>('')
   
   const submit = () => {
-    console.log({ username, password })
+    console.log({ username, password, passwordConf })
   }
 
   return (
@@ -25,7 +26,7 @@ export const LoginScreen = ({ navigation }:Props) => {
       <Layout style={{flex: 1}}>
         <ScrollView>
           <Layout style={styles.content}>
-            <Text category="h1" status="primary" style={styles.title}>Login</Text>
+            <Text category="h1" status="primary" style={styles.title}>Signup</Text>
             <Input
               label="Username:"
               value={username}
@@ -39,13 +40,20 @@ export const LoginScreen = ({ navigation }:Props) => {
               onChangeText={value => setPassword(value)}
               secureTextEntry={true}
             />
+            <Input
+              label="Password Confirmation:"
+              value={passwordConf}
+              style={styles.input}
+              onChangeText={value => setPasswordConf(value)}
+              secureTextEntry={true}
+            />
             <Layout style={styles.buttonsContainer}>
               <Button 
                 style={{marginRight: 5}}
                 status="basic"
                 onPress={() => navigation.navigate('Home')}
               >Cancel</Button>
-              <Button onPress={submit} disabled={!username || !password}>Login</Button>
+              <Button onPress={submit} disabled={!username || !password || (password !== passwordConf)}>Signup</Button>
             </Layout>
           </Layout>
         </ScrollView>

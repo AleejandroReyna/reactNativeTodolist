@@ -16,9 +16,16 @@ import { ApplicationProvider } from '@ui-kitten/components';
 import { NavigationContainer } from '@react-navigation/native';
 import { HomeScreen } from './screens/home'
 import { LoginScreen } from './screens/login'
+import { SignupScreen } from './screens/signup'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 
-const Drawer = createDrawerNavigator();
+export type DrawerParamList = {
+  Home: undefined,
+  Login: undefined,
+  Signup: undefined
+}
+
+const Drawer = createDrawerNavigator<DrawerParamList>();
 
 const App = () => {
   return (
@@ -27,6 +34,7 @@ const App = () => {
         <Drawer.Navigator initialRouteName="Home">
           <Drawer.Screen name="Home" component={HomeScreen} />
           <Drawer.Screen name="Login" component={LoginScreen} />
+          <Drawer.Screen name="Signup" component={SignupScreen} />
         </Drawer.Navigator>
       </NavigationContainer>
     </ApplicationProvider>
