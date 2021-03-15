@@ -1,6 +1,6 @@
 import React from 'react'
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native'
-import { Layout, Text, Divider } from '@ui-kitten/components'
+import { Layout, Text, Divider, Icon } from '@ui-kitten/components'
 import { HomeLink } from '../../components/homeLink'
 
 export const HomeScreen = () => {
@@ -83,11 +83,14 @@ export const HomeScreen = () => {
             >
               Step 05:
             </Text>
-            <Text style={styles.stepParragraph}>Give me an star on{' '}
+            <Layout style={{flexDirection: 'row'}}>
+            <Text style={styles.stepParragraph}>Give me an </Text>
+            <Icon name="star" fill="#000000" style={{width: 16, height: 16}} />
+            <Text> on </Text>
               <HomeLink 
                 title="Github" 
                 url="https://github.com/AleejandroReyna/react-native-todolist" />
-            </Text>
+            </Layout>
             <Text
               category="h5"
               status="info"

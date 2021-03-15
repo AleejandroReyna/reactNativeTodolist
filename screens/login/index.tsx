@@ -43,7 +43,7 @@ export const LoginScreen = ({ navigation }:Props) => {
               <Button 
                 style={{marginRight: 5}}
                 status="basic"
-                onPress={() => navigation.navigate('Home')}
+                onPress={() => navigation.goBack()}
               >Cancel</Button>
               <Button onPress={submit} disabled={!username || !password}>Login</Button>
             </Layout>
