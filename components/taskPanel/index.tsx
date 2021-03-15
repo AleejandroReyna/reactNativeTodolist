@@ -20,7 +20,7 @@ interface renderItemProps {
 export const TaskPanel = ({ navigation, tasks }:Props) => {
 
   const renderItem = ({item}:renderItemProps) => (
-    <TaskCard task={item} />
+    <TaskCard task={item} navigation={navigation} />
   )
 
   return (

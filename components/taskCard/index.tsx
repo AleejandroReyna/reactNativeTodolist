@@ -5,10 +5,12 @@ import { View, StyleSheet, ViewProps } from 'react-native'
 import { RenderProp } from '@ui-kitten/components/devsupport'
 
 interface TaskProps {
-  task: Task
+  task: Task,
+  navigation: any
 }
 
-export const TaskCard = ({task }:TaskProps) => {
+export const TaskCard = ({ task, navigation }:TaskProps) => {
+
   const statusTypes = [{type: 'todo', label: 'To Do'},
                        {type: 'doing', label: 'Doing'},
                        {type: 'inreview', label: 'In Review'},
@@ -24,7 +26,13 @@ export const TaskCard = ({task }:TaskProps) => {
       <Text category='h6'>
         { task.name }
       </Text>
-      <Button size="small" accessoryLeft={(props) => <Icon {...props} name="eye" />} />
+      <Button 
+        onPress={() => navigation.navigate('DetailTask', {
+          id: task.id
+        })}
+        size="small" 
+        accessoryLeft={(props) => <Icon {...props} 
+        name="eye" />} />
     </View>
   );
 
