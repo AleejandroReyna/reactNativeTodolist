@@ -1,13 +1,20 @@
 import React, { useState } from 'react'
 import {BottomNavigation, BottomNavigationTab, Layout, Text } from '@ui-kitten/components'
 import { TaskPanel } from '../../components/taskPanel'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator, BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { Task } from '../../services/tasks/task.interface' 
 import { SafeAreaView } from 'react-native'
 
-const TabNavigator = createBottomTabNavigator()
+export type TabParamList = {
+  Todo: {tasks: Task[]},
+  Doing: {tasks: Task[]},
+  Inreview: {tasks: Task[]},
+  Done: {tasks: Task[]}
+}
 
-const BottomTabBar = ({ navigation, state }) => (
+const TabNavigator = createBottomTabNavigator<TabParamList>()
+
+const BottomTabBar = ({ navigation, state }:BottomTabBarProps) => (
   <BottomNavigation
     selectedIndex={state.index}
     onSelect={index => navigation.navigate(state.routeNames[index])}>
@@ -35,11 +42,11 @@ export const TasksScreen = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <TabNavigator.Navigator tabBar={props => <BottomTabBar {...props} />}>
-      <TabNavigator.Screen name='To Do' 
+      <TabNavigator.Screen name='Todo' 
         children={() => <TaskPanel title='To Do' tasks={getPanelTasks('todo')} />}/>
       <TabNavigator.Screen name='Doing' 
         children={() => <TaskPanel title='Doing' tasks={getPanelTasks('doing')} />}/>
-      <TabNavigator.Screen name='In Review' 
+      <TabNavigator.Screen name='Inreview' 
         children={() => <TaskPanel title='In Review' tasks={getPanelTasks('inreview')} />}/>
       <TabNavigator.Screen name='Done' 
         children={() => <TaskPanel title='Done' tasks={getPanelTasks('done')} />}/>
