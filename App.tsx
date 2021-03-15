@@ -8,8 +8,8 @@
  * @format
  */
 
-import 'react-native-gesture-handler';
-import React from 'react';
+import 'react-native-gesture-handler'
+import React from 'react'
 
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
@@ -18,17 +18,19 @@ import { HomeScreen } from './screens/home'
 import { LoginScreen } from './screens/login'
 import { SignupScreen } from './screens/signup'
 import { CreditsScreen } from './screens/credits'
+import { DashboardScreen } from './screens/dashboard'
 import { createDrawerNavigator } from '@react-navigation/drawer'
-import { EvaIconsPack } from '@ui-kitten/eva-icons';
+import { EvaIconsPack } from '@ui-kitten/eva-icons'
 
 export type DrawerParamList = {
   Home: undefined,
   Login: undefined,
   Signup: undefined,
-  Credits: undefined
+  Credits: undefined,
+  Dashboard: undefined
 }
 
-const Drawer = createDrawerNavigator<DrawerParamList>();
+const Drawer = createDrawerNavigator<DrawerParamList>()
 
 const App = () => {
   return (
@@ -41,6 +43,7 @@ const App = () => {
           <Drawer.Screen name="Login" component={LoginScreen} />
           <Drawer.Screen name="Signup" component={SignupScreen} />
           <Drawer.Screen name="Credits" component={CreditsScreen} />
+          <Drawer.Screen name="Dashboard" component={DashboardScreen} />
         </Drawer.Navigator>
       </NavigationContainer>
     </ApplicationProvider>
