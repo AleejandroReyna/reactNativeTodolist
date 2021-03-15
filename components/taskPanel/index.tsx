@@ -1,28 +1,26 @@
 import React from 'react'
 import { Layout, Text, List, ListItem, Divider, Button } from '@ui-kitten/components'
 import { Task } from '../../services/tasks/task.interface'
+import { BottomTabNavigationProp, BottomTabBarButtonProps } from '@react-navigation/bottom-tabs'
+import { TabParamList } from '../../screens/tasks'
+import { TaskCard } from '../taskCard'
+import { StyleSheet } from 'react-native'
 
-interface panelProps {
-  title: string,
+type NavigationProps = BottomTabNavigationProp<TabParamList, 'Todo'>
+
+type Props = {
+  navigation: NavigationProps,
   tasks: Task[]
 }
 
 interface renderItemProps {
-  item: Task,
-  index: number,
-  accessoryRight: any
+  item: Task
 }
 
-export const TaskPanel = ({ tasks }:panelProps) => {
+export const TaskPanel = ({ navigation, tasks }:Props) => {
 
-  const renderRight = (props) => <Button size='tiny'>View</Button>
-  const renderItem = ({item, index}:renderItemProps) => (
-    <ListItem 
-      title={item.name}
-      description={item.content}
-      key={index}
-      accessoryRight={renderRight}
-    />
+  const renderItem = ({item}:renderItemProps) => (
+    <TaskCard task={item} />
   )
 
   return (
@@ -31,7 +29,14 @@ export const TaskPanel = ({ tasks }:panelProps) => {
         data={tasks}
         ItemSeparatorComponent={Divider}
         renderItem={renderItem}
+        contentContainerStyle={styles.contentContainer}
       />
     </Layout>
   )
 }
+
+const styles = StyleSheet.create({
+  contentContainer: {
+    padding: 4,
+  }
+});
