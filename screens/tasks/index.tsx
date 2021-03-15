@@ -5,30 +5,25 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const TabNavigator = createBottomTabNavigator()
 
-const TodoPanel = () => <TaskPanel title='To Do' />
-const DoingPanel = () => <TaskPanel title='Doing' />
-const InReviewPanel = () => <TaskPanel title='In Review' />
-const DonePanel = () => <TaskPanel title='Done' />
-
-  const BottomTabBar = ({ navigation, state }) => (
-    <BottomNavigation
-      selectedIndex={state.index}
-      onSelect={index => navigation.navigate(state.routeNames[index])}>
-      <BottomNavigationTab title='To Do'/>
-      <BottomNavigationTab title='Doing'/>
-      <BottomNavigationTab title='In Review'/>
-      <BottomNavigationTab title='Done'/>
-    </BottomNavigation>
-  );
+const BottomTabBar = ({ navigation, state }) => (
+  <BottomNavigation
+    selectedIndex={state.index}
+    onSelect={index => navigation.navigate(state.routeNames[index])}>
+    <BottomNavigationTab title='To Do'/>
+    <BottomNavigationTab title='Doing'/>
+    <BottomNavigationTab title='In Review'/>
+    <BottomNavigationTab title='Done'/>
+  </BottomNavigation>
+);
 
 export const TasksScreen = () => {
 
   return (
     <TabNavigator.Navigator tabBar={props => <BottomTabBar {...props} />}>
-    <TabNavigator.Screen name='To Do' component={TodoPanel}/>
-    <TabNavigator.Screen name='Doing' component={DoingPanel}/>
-    <TabNavigator.Screen name='In Review' component={InReviewPanel}/>
-    <TabNavigator.Screen name='Done' component={DonePanel}/>
+    <TabNavigator.Screen name='To Do' children={() => <TaskPanel title='To Do' />}/>
+    <TabNavigator.Screen name='Doing' children={() => <TaskPanel title='Doing' />}/>
+    <TabNavigator.Screen name='In Review' children={() => <TaskPanel title='In Review' />}/>
+    <TabNavigator.Screen name='Done' children={() => <TaskPanel title='Done' />}/>
   </TabNavigator.Navigator>
   )
 }
