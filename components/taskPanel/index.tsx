@@ -1,14 +1,37 @@
 import React from 'react'
-import { Layout, Text } from '@ui-kitten/components'
+import { Layout, Text, List, ListItem, Divider, Button } from '@ui-kitten/components'
+import { Task } from '../../services/tasks/task.interface'
 
 interface panelProps {
-  title: string
+  title: string,
+  tasks: Task[]
 }
 
-export const TaskPanel = ({title}:panelProps) => {
+interface renderItemProps {
+  item: Task,
+  index: number,
+  accessoryRight: any
+}
+
+export const TaskPanel = ({ tasks }:panelProps) => {
+
+  const renderRight = (props) => <Button size='tiny'>View</Button>
+  const renderItem = ({item, index}:renderItemProps) => (
+    <ListItem 
+      title={item.name}
+      description={item.content}
+      key={index}
+      accessoryRight={renderRight}
+    />
+  )
+
   return (
-    <Layout>
-      <Text>{title}</Text>
+    <Layout style={{flex: 1}}>
+      <List 
+        data={tasks}
+        ItemSeparatorComponent={Divider}
+        renderItem={renderItem}
+      />
     </Layout>
   )
 }
