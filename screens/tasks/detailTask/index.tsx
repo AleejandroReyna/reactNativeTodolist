@@ -8,17 +8,16 @@ import { StackNavigationProp } from '@react-navigation/stack'
 type NavigationProps = StackNavigationProp<DashboardParamList, 'DetailTask'>
 
 type Props = {
-  navigation: NavigationProps,
-  id: string
+  navigation: NavigationProps
 }
 
 const defaultTask:Task = {
   id: "1", 
   name: "Test Name", 
   content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni aut sequi illum amet animi corporis sapiente officiis voluptatibus doloremque minus!", 
-  status: "todo"}
+  status: "inreview"}
 
-export const DetailTaskScreen = ({navigation, id}:Props) => {
+export const DetailTaskScreen = ({navigation }:Props) => {
   const [task, setTask] = useState<Task | null >(null)
 
   useEffect(() => {
@@ -30,6 +29,19 @@ export const DetailTaskScreen = ({navigation, id}:Props) => {
     }
   }, [task])
 
+  const toEdit = () => {
+    if(task) {
+      if(task.id) {
+        navigation.navigate('EditTask', {
+          id: task?.id,
+          name: task?.name,
+          content: task?.content,
+          status: task?.status
+        })
+      }
+    }
+  }
+
   return (
     <Layout style={{flex: 1}}>
         {task !== null ?
@@ -40,7 +52,7 @@ export const DetailTaskScreen = ({navigation, id}:Props) => {
               <Text style={styles.listItem}><><Text category="s1">Content: </Text>{task.content}</></Text>
               <Text style={styles.listItem}><><Text category="s1">Status: </Text>{task.status}</></Text>
               <Layout style={styles.buttonsContent}>
-                <Button status="success">Edit</Button>
+                <Button status="success" onPress={toEdit}>Edit</Button>
                 <Button style={styles.deleteButton} status="danger">Delete</Button>
               </Layout>
             </Layout>
