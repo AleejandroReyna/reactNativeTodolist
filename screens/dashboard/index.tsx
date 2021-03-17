@@ -3,6 +3,11 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { TasksScreen } from '../tasks'
 import { DetailTaskScreen } from '../tasks/detailTask'
 
+export type DashboardParamList = {
+  Tasks: undefined,
+  DetailTask: {id:string}
+}
+
 const Stack = createStackNavigator()
 
 export const DashboardScreen = () => {

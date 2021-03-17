@@ -2,6 +2,15 @@ import React, { useState, useEffect } from 'react'
 import { Layout, Text, Spinner, Button } from '@ui-kitten/components'
 import { Task } from '../../../services/tasks/task.interface'
 import { StyleSheet, ScrollView } from 'react-native'
+import { DashboardParamList } from '../../dashboard'
+import { StackNavigationProp } from '@react-navigation/stack'
+
+type NavigationProps = StackNavigationProp<DashboardParamList, 'DetailTask'>
+
+type Props = {
+  navigation: NavigationProps,
+  id: string
+}
 
 const defaultTask:Task = {
   id: "1", 
@@ -9,7 +18,7 @@ const defaultTask:Task = {
   content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni aut sequi illum amet animi corporis sapiente officiis voluptatibus doloremque minus!", 
   status: "todo"}
 
-export const DetailTaskScreen = ({navigation}) => {
+export const DetailTaskScreen = ({navigation, id}:Props) => {
   const [task, setTask] = useState<Task | null >(null)
 
   useEffect(() => {
@@ -29,7 +38,7 @@ export const DetailTaskScreen = ({navigation}) => {
               <Text style={styles.listItem}><><Text category="s1">ID: </Text>{task.id}</></Text>
               <Text style={styles.listItem}><><Text category="s1">Name: </Text>{task.name}</></Text>
               <Text style={styles.listItem}><><Text category="s1">Content: </Text>{task.content}</></Text>
-              <Text style={styles.listItem}><><Text category="s1">Status: </Text>{task.status}</>s</Text>
+              <Text style={styles.listItem}><><Text category="s1">Status: </Text>{task.status}</></Text>
               <Layout style={styles.buttonsContent}>
                 <Button status="success">Edit</Button>
                 <Button style={styles.deleteButton} status="danger">Delete</Button>
