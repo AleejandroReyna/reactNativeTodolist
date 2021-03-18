@@ -30,6 +30,7 @@ export const DeleteTaskModal = ({ id, hideModal, isDeleting, submit }:Props) => 
     <Modal
       visible={true}
       backdropStyle={styles.backdrop}
+      onBackdropPress={hideModal}
     >
       <Card
         header={Header}
