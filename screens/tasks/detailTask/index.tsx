@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { Layout, Text, Spinner, Button } from '@ui-kitten/components'
+import { Layout, Text, Spinner, Button, Card } from '@ui-kitten/components'
 import { Task } from '../../../services/tasks/task.interface'
-import { StyleSheet, ScrollView, SafeAreaView} from 'react-native'
+import { StyleSheet, ScrollView, ViewProps, View } from 'react-native'
 import { DashboardParamList } from '../../dashboard'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { DeleteTaskModal } from '../../../components/deleteTaskModal'
+import { RenderProp } from '@ui-kitten/components/devsupport'
 
 type NavigationProps = StackNavigationProp<DashboardParamList, 'DetailTask'>
 
@@ -35,6 +36,30 @@ export const DetailTaskScreen = ({navigation }:Props) => {
   const _showModal = () => setShowModal(true)
   const _hideModal = () => setShowModal(false)
 
+  const Header:RenderProp<ViewProps> = (headerProps) => (
+    <View {...headerProps}>
+      {task &&
+        <Text category="s1">{task.name}</Text>
+      }
+    </View>
+  )
+
+  const Footer:RenderProp<ViewProps> = (footerProps) => (
+    <View {...footerProps}>
+      {task &&
+        <Layout style={styles.buttonsContent}>
+          <Text category="s1" >Actions: </Text>
+          <Button status="success" onPress={toEdit}>Edit</Button>
+          <Button 
+            style={styles.deleteButton} 
+            status="danger"
+            onPress={_showModal}
+          >Delete</Button>
+        </Layout>
+      }
+    </View>
+  )
+
   const toEdit = () => {
     if(task) {
       if(task.id) {
@@ -55,24 +80,17 @@ export const DetailTaskScreen = ({navigation }:Props) => {
   }
 
   return (
-    <Layout style={{flex: 1}}>
-        {task !== null  && task.id?
+        task !== null  && task.id?
           <>
-          <ScrollView>
-            <Layout style={styles.contentContainer}>
+          <ScrollView style={styles.contentContainer}>
+            <Card
+              header={Header}
+              footer={Footer}
+            >
               <Text style={styles.listItem}><><Text category="s1">ID: </Text>{task.id}</></Text>
-              <Text style={styles.listItem}><><Text category="s1">Name: </Text>{task.name}</></Text>
               <Text style={styles.listItem}><><Text category="s1">Content: </Text>{task.content}</></Text>
               <Text style={styles.listItem}><><Text category="s1">Status: </Text>{task.status}</></Text>
-              <Layout style={styles.buttonsContent}>
-                <Button status="success" onPress={toEdit}>Edit</Button>
-                <Button 
-                  style={styles.deleteButton} 
-                  status="danger"
-                  onPress={_showModal}
-                >Delete</Button>
-              </Layout>
-            </Layout>
+            </Card>
           </ScrollView>
           {showModal &&
             <DeleteTaskModal id={task.id} hideModal={_hideModal} isDeleting={isDeleting} submit={submitDelete} />
@@ -83,8 +101,6 @@ export const DetailTaskScreen = ({navigation }:Props) => {
         <Layout style={styles.loadingContainer}>
           <Spinner />
         </Layout>
-        }
-    </Layout>
   )
 }
 
@@ -95,13 +111,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   contentContainer: {
-    padding: 20
+    padding: 4
   },
   listItem: {
     marginBottom: 10
   },
   buttonsContent: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   deleteButton: {
     marginLeft: 5
