@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { TasksScreen } from '../tasks'
 import { DetailTaskScreen } from '../tasks/detailTask'
 import { EditTaskScreen } from '../tasks/editTask'
+import { TasksHeader } from '../../components/tasksHeader'
 
 export type DashboardParamList = {
   Tasks: undefined,
@@ -20,7 +21,10 @@ const Stack = createStackNavigator()
 export const DashboardScreen = () => {
   return (
     <Stack.Navigator initialRouteName="Tasks">
-        <Stack.Screen name="Tasks" component={TasksScreen} />
+        <Stack.Screen 
+          name="Tasks" 
+          component={TasksScreen} 
+          options={{header: (props) => <TasksHeader {...props} />}}/>
         <Stack.Screen 
           name="DetailTask" 
           component={DetailTaskScreen}
