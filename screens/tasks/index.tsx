@@ -40,7 +40,6 @@ export const TasksScreen = () => {
   const getPanelTasks = (status:string):Task[] => tasks.filter(task => task.status === status)
 
   return (
-    <SafeAreaView style={{flex: 1}}>
       <TabNavigator.Navigator tabBar={props => <BottomTabBar {...props} />}>
       <TabNavigator.Screen name='Todo' 
         children={(navigation) => <TaskPanel {...navigation} tasks={getPanelTasks('todo')} />}/>
@@ -51,6 +50,5 @@ export const TasksScreen = () => {
       <TabNavigator.Screen name='Done' 
         children={(navigation) => <TaskPanel {...navigation} tasks={getPanelTasks('done')} />}/>
     </TabNavigator.Navigator>
-    </SafeAreaView>
   )
 }

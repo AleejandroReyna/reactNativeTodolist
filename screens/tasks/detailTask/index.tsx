@@ -55,38 +55,36 @@ export const DetailTaskScreen = ({navigation }:Props) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <Layout style={{flex: 1}}>
-          {task !== null  && task.id?
-            <>
-            <ScrollView>
-              <Layout style={styles.contentContainer}>
-                <Text style={styles.listItem}><><Text category="s1">ID: </Text>{task.id}</></Text>
-                <Text style={styles.listItem}><><Text category="s1">Name: </Text>{task.name}</></Text>
-                <Text style={styles.listItem}><><Text category="s1">Content: </Text>{task.content}</></Text>
-                <Text style={styles.listItem}><><Text category="s1">Status: </Text>{task.status}</></Text>
-                <Layout style={styles.buttonsContent}>
-                  <Button status="success" onPress={toEdit}>Edit</Button>
-                  <Button 
-                    style={styles.deleteButton} 
-                    status="danger"
-                    onPress={_showModal}
-                  >Delete</Button>
-                </Layout>
+    <Layout style={{flex: 1}}>
+        {task !== null  && task.id?
+          <>
+          <ScrollView>
+            <Layout style={styles.contentContainer}>
+              <Text style={styles.listItem}><><Text category="s1">ID: </Text>{task.id}</></Text>
+              <Text style={styles.listItem}><><Text category="s1">Name: </Text>{task.name}</></Text>
+              <Text style={styles.listItem}><><Text category="s1">Content: </Text>{task.content}</></Text>
+              <Text style={styles.listItem}><><Text category="s1">Status: </Text>{task.status}</></Text>
+              <Layout style={styles.buttonsContent}>
+                <Button status="success" onPress={toEdit}>Edit</Button>
+                <Button 
+                  style={styles.deleteButton} 
+                  status="danger"
+                  onPress={_showModal}
+                >Delete</Button>
               </Layout>
-            </ScrollView>
-            {showModal &&
-              <DeleteTaskModal id={task.id} hideModal={_hideModal} isDeleting={isDeleting} submit={submitDelete} />
-            }
-            </>
-          :
-          
-          <Layout style={styles.loadingContainer}>
-            <Spinner />
-          </Layout>
+            </Layout>
+          </ScrollView>
+          {showModal &&
+            <DeleteTaskModal id={task.id} hideModal={_hideModal} isDeleting={isDeleting} submit={submitDelete} />
           }
-      </Layout>
-    </SafeAreaView>
+          </>
+        :
+        
+        <Layout style={styles.loadingContainer}>
+          <Spinner />
+        </Layout>
+        }
+    </Layout>
   )
 }
 

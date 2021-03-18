@@ -4,6 +4,8 @@ import { TasksScreen } from '../tasks'
 import { DetailTaskScreen } from '../tasks/detailTask'
 import { EditTaskScreen } from '../tasks/editTask'
 import { TasksHeader } from '../../components/tasksHeader'
+import { TaskHeader } from '../../components/taskHeader'
+import { SafeAreaView } from 'react-native'
 
 export type DashboardParamList = {
   Tasks: undefined,
@@ -20,6 +22,7 @@ const Stack = createStackNavigator()
 
 export const DashboardScreen = () => {
   return (
+    <SafeAreaView style={{flex: 1}}>
     <Stack.Navigator initialRouteName="Tasks">
         <Stack.Screen 
           name="Tasks" 
@@ -28,11 +31,18 @@ export const DashboardScreen = () => {
         <Stack.Screen 
           name="DetailTask" 
           component={DetailTaskScreen}
-          options={{title: 'Task Detail'}} />
+          options={{
+            title: 'Task Detail',
+            header: (props) => <TaskHeader {...props} />
+          }} />
         <Stack.Screen 
           name="EditTask" 
           component={EditTaskScreen}
-          options={{title: 'Edit Task'}} />
+          options={{
+            title: 'Edit Task',
+            header: (props) => <TaskHeader {...props} />
+          }} />
     </Stack.Navigator>
+    </SafeAreaView>
   )
 }

@@ -14,6 +14,7 @@ export const TasksHeader = (props:StackHeaderProps) => {
       <Button 
         status="success"
         accessoryLeft={PlusIcon}
+        size="small"
       />
     )
   } 
