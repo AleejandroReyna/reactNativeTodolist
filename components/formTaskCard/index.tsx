@@ -1,24 +1,17 @@
 import React, { useState } from 'react'
-import {ScrollView, StyleSheet, ViewProps, View } from 'react-native'
-import { DashboardParamList } from '../../dashboard'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { RouteProp } from '@react-navigation/native'
+import { Card, Input, Button, Text, IndexPath, SelectItem, Select, Layout } from '@ui-kitten/components'
+import {View, ViewProps, StyleSheet } from 'react-native'
 import { RenderProp } from '@ui-kitten/components/devsupport'
-import { 
-  Button, 
-  Input, 
-  Layout, 
-  Text, 
-  IndexPath, Select, SelectItem, Card } from '@ui-kitten/components'
+import { Task } from '../../services/tasks/task.interface'
 
-
-type NavigationProps = StackNavigationProp<DashboardParamList, 'EditTask'>
-type RouteProps = RouteProp<DashboardParamList, 'EditTask'>
-
-type Props = {
-  navigation: NavigationProps,
-  route: RouteProps
+interface Props {
+  title: string,
+  action: string,
+  task: Task,
+  onCancel?(): void,
+  onSubmit(task:Task): void
 }
+
 
 interface statusType {
   type: string,
@@ -31,18 +24,17 @@ const statusList:statusType[] = [
   {type: 'inreview', label: 'In Review'} ,
   {type: 'done', label: 'Done'}]
 
-export const EditTaskScreen = ({route, navigation}:Props) => {
-  const { params } = route
-  const [name, setName] = useState<string>(params.name)
-  const [content, setContent] = useState<string>(params.content)
-  const [status, setStatus] = useState<string>(params.status)
-  
+export const FormTaskCard = ({ title, action, task , onCancel, onSubmit}:Props) => {
+  const [name, setName] = useState<string>(task.name)
+  const [content, setContent] = useState<string>(task.content)
+  const [status, setStatus] = useState<string>(task.status)
+
   const setDefaultValue = ():number => {
     let filtering = statusList.find(statusItem => statusItem.type === status)
       return filtering ? statusList.indexOf(filtering) : 0
   }
   
-  const [selectedIndex, setSelectedIndex] = useState<IndexPath | IndexPath[]>(new IndexPath(setDefaultValue()));
+  const [selectedIndex, setSelectedIndex] = useState<IndexPath | IndexPath[]>(new IndexPath(setDefaultValue()))
   const displayValue = "row" in selectedIndex ? statusList[selectedIndex.row].label : ""
   const renderOption = (item:statusType) => <SelectItem key={item.type} title={item.label}/> 
   
@@ -53,33 +45,33 @@ export const EditTaskScreen = ({route, navigation}:Props) => {
     }
   }
 
-  const submit = () => {
-    console.log({name, content, status})
-  }
+  const submit = () => onSubmit({name, content, status})
 
   const Header:RenderProp<ViewProps> = (headerProps) => (
     <View {...headerProps}>
-      {params && params.id &&
-        <Text category="s1">Edit Task: {params.id}</Text>
-      }
+      <Text category="s1">{title}</Text>
     </View>
   )
 
   const Footer:RenderProp<ViewProps> = (footerProps) => (
     <View {...footerProps}>
       <Layout style={styles.buttonsContent}>
-        <Button style={styles.buttonLeft} status="basic">Cancel</Button>
-        <Button onPress={submit} status="success">Edit Task</Button>
+        {onCancel &&
+          <Button style={styles.buttonLeft} onPress={onCancel} status="basic">Cancel</Button>
+        }
+        <Button onPress={() => {submit()}} status="success">
+          {bProps => <Text {...bProps}>{action} Task</Text>}
+        </Button>
       </Layout>
     </View>
   )
 
   return (
-    <ScrollView style={styles.contentLayout}>
-      <Card 
-        header={Header}
-        footer={Footer} >
-        <Input
+    <Card
+      header={Header}
+      footer={Footer}
+    >
+      <Input
           label="Name:"
           style={styles.input}
           value={name}
@@ -97,27 +89,16 @@ export const EditTaskScreen = ({route, navigation}:Props) => {
           label="status: "
           selectedIndex={selectedIndex}
           value={displayValue}
-          style={styles.input}
           onSelect={changeStatusValue}>
           {statusList.map(renderOption)}
         </Select>
-      </Card>
-    </ScrollView>
+    </Card>
   )
 }
 
 const styles = StyleSheet.create({
-  mainLayout: {
-    flex: 1
-  },
   input: {
     marginBottom: 10
-  },
-  contentLayout: {
-    padding: 4
-  },
-  title: {
-    marginBottom: 30
   },
   buttonsContent: {
     flexDirection: 'row'

@@ -1,6 +1,6 @@
 import React from 'react'
 import { TopNavigation, Icon, Button, IconProps} from '@ui-kitten/components'
-import { SafeAreaView } from 'react-native'
+import { SafeAreaView, StyleSheet } from 'react-native'
 import { StackHeaderProps } from '@react-navigation/stack'
 
 const PlusIcon = (props:IconProps) => {
@@ -8,6 +8,7 @@ const PlusIcon = (props:IconProps) => {
 }
 
 export const TasksHeader = (props:StackHeaderProps) => {
+  const {navigation: { navigate }} = props
 
   const Right = () => {
     return (
@@ -15,6 +16,7 @@ export const TasksHeader = (props:StackHeaderProps) => {
         status="success"
         accessoryLeft={PlusIcon}
         size="small"
+        onPress={() => navigate('CreateTask')}
       />
     )
   } 
