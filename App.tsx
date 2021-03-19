@@ -21,6 +21,7 @@ import { CreditsScreen } from './screens/credits'
 import { DashboardScreen } from './screens/dashboard'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { EvaIconsPack } from '@ui-kitten/eva-icons'
+import { DrawerContent } from './components/drawerContent'
 
 export type DrawerParamList = {
   Home: undefined,
@@ -38,7 +39,7 @@ const App = () => {
     <IconRegistry icons={EvaIconsPack} />
     <ApplicationProvider {...eva} theme={eva.light}>
       <NavigationContainer>
-        <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Navigator initialRouteName="Home" drawerContent={props => <DrawerContent {...props}/>}>
           <Drawer.Screen name="Home" component={HomeScreen} />
           <Drawer.Screen name="Login" component={LoginScreen} />
           <Drawer.Screen name="Signup" component={SignupScreen} />
