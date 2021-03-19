@@ -1,9 +1,15 @@
 import React, { useState } from 'react'
-import { Button, Input, Layout, Text, IndexPath, Select, SelectItem } from '@ui-kitten/components'
-import {ScrollView, StyleSheet } from 'react-native'
+import {ScrollView, StyleSheet, ViewProps, View } from 'react-native'
 import { DashboardParamList } from '../../dashboard'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { RouteProp } from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native'
+import { RenderProp } from '@ui-kitten/components/devsupport'
+import { 
+  Button, 
+  Input, 
+  Layout, 
+  Text, 
+  IndexPath, Select, SelectItem, Card } from '@ui-kitten/components'
 
 
 type NavigationProps = StackNavigationProp<DashboardParamList, 'EditTask'>
@@ -49,13 +55,31 @@ export const EditTaskScreen = ({route, navigation}:Props) => {
 
   const submit = () => {
     console.log({name, content, status})
-  } 
+  }
+
+  const Header:RenderProp<ViewProps> = (headerProps) => (
+    <View {...headerProps}>
+      {params && params.id &&
+        <Text category="s1">Edit Task: {params.id}</Text>
+      }
+    </View>
+  )
+
+  const Footer:RenderProp<ViewProps> = (footerProps) => (
+    <View {...footerProps}>
+      <Layout style={styles.buttonsContent}>
+        <Button style={styles.buttonLeft} status="basic">Cancel</Button>
+        <Button onPress={submit} status="success">Edit Task</Button>
+      </Layout>
+    </View>
+  )
 
   return (
-    <Layout style={styles.mainLayout}>
-      <ScrollView>
-        <Layout style={styles.contentLayout}>
-        <Text style={styles.title} status="primary" category="h4">Edit Task</Text>
+    <ScrollView style={styles.contentLayout}>
+      <Card 
+        header={Header}
+        footer={Footer}
+        style={styles.contentLayout}>
         <Input
           label="Name:"
           style={styles.input}
@@ -78,13 +102,8 @@ export const EditTaskScreen = ({route, navigation}:Props) => {
           onSelect={changeStatusValue}>
           {statusList.map(renderOption)}
         </Select>
-        <Layout style={styles.buttonsContent}>
-            <Button style={styles.buttonLeft} status="basic">Cancel</Button>
-            <Button onPress={submit} status="success">Edit Task</Button>
-        </Layout>
-        </Layout>
-      </ScrollView>
-    </Layout>
+      </Card>
+    </ScrollView>
   )
 }
 
@@ -96,14 +115,13 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   contentLayout: {
-    padding: 20
+    padding: 4
   },
   title: {
     marginBottom: 30
   },
   buttonsContent: {
-    flexDirection: 'row',
-    marginTop: 10
+    flexDirection: 'row'
   },
   buttonLeft: {
     marginRight: 5

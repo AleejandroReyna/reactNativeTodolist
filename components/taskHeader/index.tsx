@@ -4,8 +4,6 @@ import { StackHeaderProps } from '@react-navigation/stack'
 
 export const TaskHeader = (props:StackHeaderProps) => {
   const { navigation: { goBack }, scene: {descriptor: {options: { title }}} } = props
-  
-  console.log(props.scene.descriptor.options.title)
 
   const BackIcon = (_props:IconProps) => (
     <Icon {..._props} name='arrow-back'/>
