@@ -22,13 +22,15 @@ import { DashboardScreen } from './screens/dashboard'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import { EvaIconsPack } from '@ui-kitten/eva-icons'
 import { DrawerContent } from './components/drawerContent'
+import { LogoutScreen } from './screens/logout';
 
 export type DrawerParamList = {
   Home: undefined,
   Login: undefined,
   Signup: undefined,
   Credits: undefined,
-  Dashboard: undefined
+  Dashboard: undefined,
+  Logout: undefined
 }
 
 const Drawer = createDrawerNavigator<DrawerParamList>()
@@ -45,6 +47,7 @@ const App = () => {
           <Drawer.Screen name="Signup" component={SignupScreen} />
           <Drawer.Screen name="Credits" component={CreditsScreen} />
           <Drawer.Screen name="Dashboard" component={DashboardScreen} />
+          <Drawer.Screen name="Logout" component={LogoutScreen} />
         </Drawer.Navigator>
       </NavigationContainer>
     </ApplicationProvider>
