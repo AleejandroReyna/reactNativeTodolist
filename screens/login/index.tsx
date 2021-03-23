@@ -3,6 +3,9 @@ import { Text, Button, Input, Layout } from '@ui-kitten/components'
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native'
 import { DrawerNavigationProp } from '@react-navigation/drawer'
 import { DrawerParamList } from '../../App'
+import { UserContext } from '../../contexts/user.context'
+import { User } from '../../services/user/user.interface'
+import { loginService } from '../../services/user/login.service'
 
 type NavigationProps = DrawerNavigationProp<DrawerParamList, 'Login'>
 
@@ -10,13 +13,21 @@ type Props = {
   navigation: NavigationProps
 }
 
+type ViewProps = {
+  navigation: NavigationProps,
+  addUser(user: User): void 
+}
 
-export const LoginScreen = ({ navigation }:Props) => {
+const LoginTemplate = ({ navigation, addUser }:ViewProps) => {
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  
-  const submit = () => {
-    console.log({ username, password })
+
+  const submit = async () => {
+    const response = await loginService({username, password})
+    if(response.status === 200 && response.data) {
+      addUser(response.data)
+      navigation.navigate('Dashboard')
+    }
   }
 
   return (
@@ -45,7 +56,9 @@ export const LoginScreen = ({ navigation }:Props) => {
                 status="basic"
                 onPress={() => navigation.goBack()}
               >Cancel</Button>
-              <Button onPress={submit} disabled={!username || !password}>Login</Button>
+              <Button 
+                disabled={!username || !password} 
+                onPress={submit}>Login</Button>
             </Layout>
           </Layout>
         </ScrollView>
@@ -53,6 +66,15 @@ export const LoginScreen = ({ navigation }:Props) => {
     </SafeAreaView>
   )
 }
+
+
+export const LoginScreen = ({ navigation }:Props) => (
+  <UserContext.Consumer>
+    {({ addUser }) => 
+      <LoginTemplate navigation={navigation} addUser={addUser} />
+    }
+  </UserContext.Consumer>
+)
 
 const styles = StyleSheet.create({
   title: {

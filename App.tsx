@@ -37,7 +37,11 @@ export type DrawerParamList = {
 
 const Drawer = createDrawerNavigator<DrawerParamList>()
 
-const Router = ({ user }) => {
+interface RouterProps {
+  user: User | null | undefined
+}
+
+const Router = ({ user }:RouterProps) => {
   console.log('user: ', user)
   
   return (

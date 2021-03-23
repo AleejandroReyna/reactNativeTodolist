@@ -1,5 +1,7 @@
 export interface User {
-  username: string
+  username: string,
+  refresh: string | null,
+  access: string | null
 }
 
 export interface UserContextProps {
