@@ -25,6 +25,7 @@ import { DrawerContent } from './components/drawerContent'
 import { LogoutScreen } from './screens/logout'
 import { UserContext } from './contexts/user.context'
 import { User } from './services/user/user.interface'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export type DrawerParamList = {
   Home: undefined,
@@ -77,8 +78,17 @@ const App = () => {
   }
 
   useEffect(() => {
-    setTimeout(() => setLoading(false), 2000)
-  })
+    const getData = async () => {
+      let username = await AsyncStorage.getItem("username")
+      let refresh = await AsyncStorage.getItem("refresh")
+      console.log("run app: ", username, refresh)
+      if(username && refresh) {
+        setUser({username, refresh, access: null})
+      }
+      setLoading(false)
+    }
+    getData()
+  }, [loading])
 
   return (
     <UserContext.Provider value={{user, addUser, clearUser}}>
