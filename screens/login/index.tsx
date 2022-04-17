@@ -23,10 +23,11 @@ const LoginTemplate = ({ navigation, addUser }:ViewProps) => {
   const [password, setPassword] = useState<string>('')
 
   const submit = async () => {
-    const response = await loginService({username, password})
-    if(response.status === 200 && response.data) {
-      addUser(response.data)
-      navigation.navigate('Dashboard')
+    try {
+      const response = await loginService({username, password})
+      console.log(response)
+    } catch(e) {
+      console.log("error: ", e)
     }
   }
 
